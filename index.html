@@ -67,18 +67,24 @@ body{
 ========================= */
 
 .screen{
-
     position:absolute;
     inset:0;
 
     width:100%;
-    height:100%;
+    min-height:100%;
+    height:100dvh;
 
     display:flex;
-    justify-content:center;
+    justify-content:flex-start;
     align-items:center;
+    flex-direction:column;
 
     padding:25px;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    -webkit-overflow-scrolling:touch;
 
     opacity:0;
     visibility:hidden;
@@ -91,13 +97,15 @@ body{
         visibility .7s;
 }
 
-
 .screen.active{
-
     opacity:1;
     visibility:visible;
     transform:scale(1);
+}
 
+.screen .card{
+    margin:auto 0;
+    flex-shrink:0;
 }
 
 
@@ -2872,6 +2880,23 @@ button{
     }
 
 }
+
+@media(max-width:600px){
+
+    .wish-card{
+        margin:20px 0;
+    }
+
+    .blessing-message{
+        margin-bottom:30px;
+    }
+
+    .screen{
+        padding-top:20px;
+        padding-bottom:40px;
+    }
+
+}
 </style>
 
 </head>
@@ -3837,9 +3862,20 @@ function blowCandle(){
 
     setTimeout(function(){
 
-        document
-        .getElementById("blessingMessage")
-        .style.display="block";
+        const blessing =
+        document.getElementById("blessingMessage");
+
+        blessing.style.display="block";
+
+
+        setTimeout(function(){
+
+            blessing.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+        },200);
 
     },600);
 
